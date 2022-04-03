@@ -49,8 +49,10 @@ class HttpService extends GetxService implements AbsHttpService {
   }
 
   void _throwResponseError(http.Response? response, String body) {
+    Get.find<AbsLoggerService>()
+        .error(message: "${response?.body ?? ""}\r requestBody: $body");
     throw ApiResponseException(response?.statusCode ?? 0)
-      ..message = "${response?.body ?? ""}\r requestBody: $body"
+      ..message = response?.body ?? ""
       ..originalException = response?.reasonPhrase;
   }
 }
